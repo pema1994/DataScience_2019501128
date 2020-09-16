@@ -26,8 +26,7 @@ function [X_norm, mu, sigma] = featureNormalize(X)
 mu = mean(X);
 sigma = std(X);
 
-ones_var = ones(length(X), 1);
-X_norm = (X - (ones_var* mu)) ./ (sigma); 
+X_norm = (X - mu) ./ (sigma); 
 
 
 
