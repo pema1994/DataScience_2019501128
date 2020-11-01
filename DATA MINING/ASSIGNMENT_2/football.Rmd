@@ -1,0 +1,56 @@
+#8) This question uses the data at http://www-stat.wharton.upenn.edu/~dmease/football.csv. Download it to your computer. This data set gives the total number of wins for each of the 117 Division 1A college football teams for the 2003 and 2004 seasons. 
+
+#a) Use plot() in R to make a scatter plot for this data with 2003 wins on the x-axis and 2004 wins on the y-axis. Use the range 0 to 12 for both the x-axis and y-axis. Include the R commands and the plot. Put your name in the title of the plot.
+
+
+```{r}
+setwd("/Users/pemawangmo/Desktop/DS_Notes/DATA_MINING/DataMiningAssignments/DM_Assignment2")
+```
+```{r}
+football<-read.csv("football.csv",header=TRUE)
+head(football)
+```
+
+
+```{r}
+str(football)
+```
+
+```{r}
+#plot(X2004.Wins ~ X2003.Wins, data=football, main="Pemas")
+
+plot(football[,2],football[,3],xlim=c(0,12),ylim=c(0,12),pch=15,col="blue",xlab="2003 Wins",ylab="2004 Wins",main="Football Wins")
+#abline(c(0,1))
+
+
+```
+
+```{r}
+#c) Compute the correlation in R using the function cor().
+cor(football[,2],football[,3]) 
+
+```
+#d) How does the value in part c change if you add 10 to all the values for 2004?
+```{r}
+cor(football[,2],football[,3]+10) 
+#the value doesn't change
+
+```
+#e) How does the value in part c change if you multiply all the 2004 values by 2?
+```{r}
+cor(football[,2],football[,3]*2) 
+#the valued doesn't change
+```
+
+
+#f) How does the value in part c change if you multiply all the 2004 values by -2?
+```{r}
+cor(football[,2],football[,3]*-2) 
+#It changes its sign to become negative. 
+```
+
+
+
+
+
+

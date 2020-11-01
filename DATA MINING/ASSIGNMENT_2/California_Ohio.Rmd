@@ -1,0 +1,67 @@
+#7) This question uses a sample of 1500 California house prices at http://www-stat.wharton.upenn.edu/~dmease/CA_house_prices.csv and a sample of 10,000 Ohio house prices at http://www-stat.wharton.upenn.edu/~dmease/OH_house_prices.csv. Download both data sets to your computer. Note that the house prices are in thousands of dollars.
+
+#a) Use R to produce a single graph displaying a boxplot for each set (as in ICE #16). Include the R commands and the plot. Put your name in the title of the plot (for example, main="Britney Spears' Boxplots").
+
+```{r}
+setwd("/Users/pemawangmo/Desktop/DS_Notes/DATA_MINING/DataMiningAssignments/DM_Assignment2")
+california<-read.csv("CA_house_prices.csv", header=FALSE)
+ohio<-read.csv("OH_house_prices.csv", header = FALSE)
+```
+
+```{r}
+boxplot(california$V1, ohio$V1, main="Pema's Box Plots",
+        col="red",
+        names=c("California", "Ohio"),
+        ylab="Prices")
+```
+#b) Use R to produce a frequency histogram for only the California house prices. Use intervals of width $500,000 beginning at 0 and ending at $3.5 million. Include the R commands and the plot. Put your name in the title of the plot.
+
+```{r}
+hist(california$V1,breaks=seq(from=0,to=3500,by=500),col=c("green","red","blue","yellow","orange"),main="Pema's Histogram",xlab="California House Prices(dollars)",ylab = "frequency")
+```
+#c) Use R to plot the ECDF of the California houses and Ohio houses on the same graph (as in ICE #11). Include a legend. Include the R commands and the plot. Put your name in the title of the plot.
+```{r}
+plot(ecdf(california[,1]),verticals= TRUE,do.p = FALSE,main ="ECDF for House Prices ",xlab="Prices (in thousands)",ylab="Frequency")
+lines(ecdf(ohio[,1]),verticals= TRUE,do.p = FALSE,col.h="red",col.v="red",lwd=4)
+legend(2100,.6,c("CA Houses","OH Houses"), col=c("black","red"),lwd=c(1,4))
+```
+
+```{r}
+plotEcdf <- function() {
+  plot(ecdf(california$V1),
+       xlab="Price",
+       ylab="Fn(Price)",
+       pch=20,
+       main="Pema's ECDF of California",
+       col="blue")
+
+  legend("bottomright",
+         c("Fn(Price)"),
+         col=c("blue"),
+         cex=0.8,
+         inset=0.1,
+         bty="n",
+         pch=20)
+
+  plot(ecdf(ohio$V1),
+       xlab="Price",
+       ylab="Fn(Price)",
+       pch=20,
+       main="Pema's ECDF",
+       col="red")
+
+  legend("bottomright",
+         c("Fn(Price)"),
+         col=c("red"),
+         cex=0.8,
+         inset=0.1,
+         bty="n",
+         pch=20)
+}
+```
+```{r}
+plotEcdf()
+```
+
+
+

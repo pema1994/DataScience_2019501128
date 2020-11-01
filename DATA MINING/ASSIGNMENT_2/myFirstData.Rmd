@@ -1,0 +1,55 @@
+#Read in the data in R using data←read.csv("myfirstdata.csv",header=FALSE). 
+#Note, you first need to specify your working directory using the setwd() command.
+
+#a) Determine whether each of the two attributes (columns) is treated as qualitative (categorical) or quantitative (numeric) using R. Explain how you can tell using R.
+
+```{r}
+setwd("/Users/pemawangmo/Desktop/DS_Notes/DATA_MINING/DataMiningAssignments/DM_Assignment2")
+```
+```{r}
+myData<-read.csv("myfirstdata.csv",header=FALSE)
+```
+
+
+```{r}
+str(myData)
+
+```
+```{r}
+#a) The first attributes is treated as quantitative value because its attribute type is integer.The second is treated as qualitative value because its attribute type is character.
+
+```
+#b) What is the specific problem that causes one of these two attributes to be read in as qualitative (categorical) when it seems it should be quantitative (numeric)?
+
+```{r}
+#As we can see from the results above, V2 is “0”, "3", etc which are strings. The V2 column is character.
+#some of the values in column V2 contain characters, thats why it read as categorical.
+
+```
+#c) Use the command plot() in R to make a plot for each column by entering plot(data[,1]) and plot(data[,2]). Because one variable is read in as quantitative (numeric) and the other as qualitative (categorical) these two plots are showing completely different things by default. Explain exactly what is being plotted in each of the two cases. Include these two plots in your homework.
+
+```{r}
+plot(myData[,1])
+```
+
+
+```{r}
+## Column V1 is numeric data, it shows the distribution of the numbers of the integer from 0 to 2000. 
+
+```
+
+
+```{r}
+plot(myData[,2])
+
+```
+```{r}
+# ALthough Column V2 is categorical data, it shows the distribution of the numbers of the categorical data from 0 to 2000;
+```
+#d) Read the data into Excel. Excel should have no problem opening the file directly since it is .csv. Create a new column that is equal to the second column plus 10. What is the result for the problem observations (rows) you identified in part b? What specific outcome does Excel display?
+
+
+
+## Conclusion: Excel is able to add a number to a catagorical number, but R function does not allow. 
+
+
