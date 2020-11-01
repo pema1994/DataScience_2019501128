@@ -1,0 +1,42 @@
+#9) This question uses the sample of 10,000 Ohio house prices at http://www-stat.wharton.upenn.edu/~dmease/OH_house_prices.csv. Download the data set to your computer. Note that the house prices are in thousands of dollars.
+
+#a) What is the median value? Is it larger or smaller than the mean?
+
+```{r}
+setwd("/Users/pemawangmo/Desktop/DS_Notes/DATA_MINING/DataMiningAssignments/DM_Assignment2")
+ohio<-read.csv("OH_house_prices.csv", header=FALSE)
+```
+
+```{r}
+median(ohio[,1])
+```
+```{r}
+mean(ohio[,1])
+```
+```{r}
+#median is smaller than mean
+
+```
+
+#b) What does your answer to part a suggest about the shape of the distribution (right-skewed or left-skewed)?
+```{r}
+#Since mean is greater than median, we can infer that the shape of distribution is right-skewed. 
+# Yes the distribution has more weight towards the left (lower house price).
+# Yes there is a long tail towards the right (higher house prices).
+```
+#c) How does the median change if you add 10 (thousand dollars) to all the values?
+```{r}
+median(ohio[,1]+10) 
+
+```
+```{r}
+#The median increases by 10 (thousand dollars) to $128,000. 
+```
+#d) How does the median change if you multiply all the values by 2?
+```{r}
+median(2*ohio[,1]) 
+```
+```{r}
+#the median doubles
+```
+

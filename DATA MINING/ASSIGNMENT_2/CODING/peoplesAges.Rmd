@@ -1,0 +1,28 @@
+#10) This question uses the following people's ages: 19,23,30,30,45,25,24,20. Store them in R using the syntax ages<-c(19,23,30,30,45,25,24,20).
+
+#a) Compute the standard deviation in R using the sd() function.
+```{r}
+ages<-c(19,23,30,30,45,25,24,20)
+sd(ages)
+
+```
+#b) Compute the same value by hand and show all the steps.
+```{r}
+
+```
+#c) Using R, how does the value in part a change if you add 10 to all the values?
+```{r}
+sd(ages+10) 
+```
+```{r}
+#it does not change
+```
+#d) Using R, how does the value in part a change if you multiply all the values by 100?
+```{r}
+sd(100*ages) 
+```
+```{r}
+# It is multiplied by 100. 
+```
+
+
