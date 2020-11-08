@@ -1,0 +1,29 @@
+#2.	Implement Apriori Algorithm or use built in packages to find out the frequent itemsets and generate rules for frequent itemsets. Trace and submit the program output for the following given dataset of transactions with a minimum support of 3.
+
+```{r}
+library('arules')
+
+```
+```{r}
+setwd("/Users/pemawangmo/Desktop/DS_Notes/DATA_MINING/Final_exam/QUESTION2")
+data<-read.csv("apriori_excel.csv", header=TRUE)
+```
+```{r}
+str(data)
+```
+```{r}
+data$TID <- NULL
+write.csv(data, "Items.csv", quote = FALSE, row.names = TRUE)
+
+```
+```{r}
+transac = read.transactions("Items.csv", sep=',', rm.duplicates = TRUE)
+apriori_rules <- apriori(transac, parameter = list(sup = 0.03, conf = 0.5,target="rules"))
+
+```
+```{r}
+inspect(sort(apriori_rules, by = 'lift')[1:15])
+
+itemFrequencyPlot(transac, topN = 5)
+```
+
