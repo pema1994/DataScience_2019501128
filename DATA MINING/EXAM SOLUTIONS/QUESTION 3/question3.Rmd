@@ -1,0 +1,33 @@
+#3.	Build Decision Trees by using i) information gain and ii) misclassification error rate for Lenses Data Set provided at http://archive.ics.uci.edu/ml/datasets/Lenses.  In terms of tree size what do you conclude comparing these two?	
+
+```{r}
+setwd("/Users/pemawangmo/Desktop/DS_Notes/DATA_MINING/Final_exam/QUESTION3")
+data<-read.csv("lenses_data.csv", header = FALSE, col.names = c("ID", "age", "spectacle_prescription", "astigmatic", "tear_production_rate", "type_of_lense"))
+```
+```{r}
+str(data)
+```
+
+```{r}
+#data$index <- NULL
+library(rpart)
+y = as.factor(data[,5])
+x = data[,1:4]
+```
+
+```{r}
+fit<-rpart(y~.,x,control=rpart.control(minsplit=0,minbucket=0,cp=-1, maxcompete=0, maxsurrogate=0, usesurrogate=0, xval=0,maxdepth=5))
+
+```
+```{r}
+library(rpart.plot)
+rpart.plot(fit)
+```
+```{r}
+#Information Gain for training set
+sum(y==predict(fit,x,type="class"))/length(y)
+
+#miscalassification error rate for training set
+1-sum(y==predict(fit,x,type="class"))/length(y)
+```
+
