@@ -1,0 +1,144 @@
+#Use Kmeans() with all `the default values to find the k=2 solution for the first two columns of the sonar test data. Plot these two columns. Also plot the fitted cluster centers using a different color. Finally use the knn() function to assign the cluster membership for the points to the nearest cluster center. Color the points according to their cluster membership.  Show your R commands for doing so.
+
+```{r}
+setwd("/Users/pemawangmo/Desktop/DS_Notes/DATA_MINING/DataMiningAssignments/DM_Assignment5")
+data<-read.csv("sonar_test.csv", header=FALSE)
+```
+```{r}
+x<-data[,1:2]
+plot(x,pch=19,xlab=expression(x[1]), ylab=expression(x[2]))
+fit<-kmeans(x, 2)
+points(fit$centers,pch=19,col="blue",cex=2)
+library(class)
+knnfit<-knn(fit$centers,x,as.factor(c(-1,1)))
+points(x,col=1+1*as.numeric(knnfit),pch=19)
+```
+#3) Graphically compare the cluster memberships from the previous problem to the actual labels in the test data. Also compute the misclassification error that would result if you used your clustering rule to classify the data. Show your R commands for doing so.
+```{r}
+plot(x,pch=19,xlab=expression(x[1]), ylab=expression(x[2]))
+y<-data[,61]
+points(x,col=2+2*y,pch=19)
+1-sum(knnfit==y)/length(y)
+```
+#4) Repeat In Class Exercise #53 using the sonar test data instead of the sonar training data and show your R commands for doing so.
+```{r}
+x<-data[,1:60]
+fit<-kmeans(x, 2)
+library(class)
+knnfit<-knn(fit$centers,x,as.factor(c(-1,1)))
+
+1-sum(knnfit==y)/length(y)
+```
+
+#5) Repeat In Class Exercise #54 using the data x<-c(1,2,2.5,3,3.5,4,4.5,5,7,8,8.5,9,9.5,10) instead. Show all your work for each step and be sure to say specifically which points are in each cluster at each step.
+```{r}
+x<-c(1,2,2.5,3,3.5,4,4.5,5,7,8,8.5,9,9.5,10)
+
+center1<-1
+center2<-2
+
+for (k in 2:10){
+  cluster1<-x[abs(x-center1[k-1])<=abs(x-center2[k-1])]
+  cluster2<-x[abs(x-center1[k-1])>abs(x-center2[k-1])]
+  center1[k]<-mean(cluster1)
+  center2[k]<-mean(cluster2)
+}
+```
+#6) Repeat In Class Exercise #55 using the data x<-c(1,2,2.5,3,3.5,4,4.5,5,7,8,8.5,9,9.5,10) instead and show your R commands for doing so.
+```{r}
+x<-c(1,2,2.5,3,3.5,4,4.5,5,7,8,8.5,9,9.5,10)
+
+center1<-1
+center2<-2
+
+for (k in 2:10){
+  cluster1<-x[abs(x-center1[k-1])<=abs(x-center2[k-1])]
+  cluster2<-x[abs(x-center1[k-1])>abs(x-center2[k-1])]
+  center1[k]<-mean(cluster1)
+  center2[k]<-mean(cluster2)
+}
+```
+#7) Repeat In Class Exercise #56 using the data x<-c(1,2,2.5,3,3.5,4,4.5,5,7,8,8.5,9,9.5,10) instead and show your R commands for doing so.
+```{r}
+kmeans(x,2)
+
+
+```
+```{r}
+plot(x, col=fit$cluster, xlab = 'x', ylab='values', pch=19)
+```
+
+#8) Consider the points x1<-c(1,2) and x2<-c(5,10).
+#b) Verify that the dist function in R gives the same value as you got in part a. Show your R commands for doing so.
+```{r}
+x1<-c(1,2) 
+x2<-c(5,10)
+data<-(rbind(x1,x2))
+dist(data)
+```
+#9) Consider the points x1<-c(1,2,3,6) and x2<-c(5,10,4,12).
+
+#b) Verify that the dist function in R gives the same value as you got in part a. Show your R commands for doing so.
+```{r}
+x1<-c(1,2,3,6)
+x2<-c(5,10,4,12)
+data<-(rbind(x1,x2))
+dist(data)
+```
+
+#11) Repeat In Class Exercise #59 using the grades for the first midterm at www.stats202.com/spring2008exams.csv. Are there any outliers according to the z=+/-3 rule? What is the value of the largest z score and what is the value of the smallest (most negative) z score? Show your R commands.
+
+```{r}
+data<-read.csv("spring2008exams.csv")
+mean_exam<-mean(data[,2],na.rm=TRUE) 
+sd_exam<-sd(data[,2],na.rm=TRUE)
+z<-(data[,2]-mean_exam)/sd_exam
+li=sort(z)
+cat("largest z score:",li[length(li)])
+cat("\nSmallest z score:",li[1])
+```
+
+#12) Repeat In Class Exercise #59 using the grades for the second midterm at www.stats202.com/spring2008exams.csv. Are there any outliers according to the z=+/-3 rule? What is the value of the largest z score and what is the value of the smallest (most negative) z score? Show your R commands.
+```{r}
+spring_data<-read.csv("spring2008exams.csv")
+mean_exam<-mean(spring_data[,3],na.rm=TRUE) 
+sd_exam<-sd(spring_data[,3],na.rm=TRUE)
+z<-(spring_data[,3]-mean_exam)/sd_exam
+li=sort(z)
+cat("largest z score:",li[length(li)])
+cat("\nSmallest z score:",li[1])
+
+```
+
+#14) Repeat In Class Exercise #61 using the grades for the second midterm at www.stats202.com/spring2008exams.csv. Show your R commands and include the boxplot. Are any of the grades for the second midterm outliers by this rule? If so, which ones?
+```{r}
+spring_data<-read.csv("spring2008exams.csv")
+
+q1<-quantile(spring_data[,3],.25,na.rm=TRUE)
+q3<-quantile(spring_data[,3],.75,na.rm=TRUE)
+iqr<-q3-q1
+
+spring_data[(spring_data[,3]>q3+1.5*iqr),3]
+spring_data[(spring_data[,3]<q1-1.5*iqr),3]
+
+boxplot(spring_data[,2],spring_data[,3],col="blue",
+main="spring2008exams",
+names=c("first midterm","second midterm"),ylab="Exam Score")
+
+```
+
+#15) Repeat In Class Exercise #62 using the midterm grades at www.stats202.com/spring2008exams.csv. Be sure to include the plot. Which student # had the largest POSITIVE residual? Show your R commands.
+```{r}
+spring_data<-read.csv("spring2008exams.csv")
+
+model<-lm(spring_data[,3]~spring_data[,2])
+plot(spring_data[,2],spring_data[,3],pch=19,xlab="first midterm",ylab="second midterm",xlim=c(100,200),ylim=c(100,200))
+abline(model)
+max(model$residuals)
+```
+
+#student number 5
+
+
+
+
