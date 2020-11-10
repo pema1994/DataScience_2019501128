@@ -1,0 +1,54 @@
+#5) I split the popular sonar data set into a training set (http://www-stat.wharton.upenn.edu/~dmease/sonar_train.csv) and a test set (http://www-stat.wharton.upenn.edu/~dmease/sonar_test.csv). Use R to compute the misclassification error rate on the test set when training on the training set for a tree of depth 5 using all the default values except control=rpart.control(minsplit=0,minbucket=0,cp=-1, maxcompete=0, maxsurrogate=0, usesurrogate=0, xval=0,maxdepth=5). Remember that the 61st column is the response and the other 60 columns are the predictors. 
+
+```{r}
+setwd("/Users/pemawangmo/Desktop/DS_Notes/DATA_MINING/DataMiningAssignments/DM_Assignment4")
+test<-read.csv("sonar_test.csv", header=FALSE)
+train<-read.csv("sonar_train.csv", header=FALSE)
+
+```
+```{r}
+y<-as.factor(train[,61])
+x<-train[,1:60]
+y_test<-as.factor(test[,61])
+x_test<-test[,1:60]
+```
+
+```{r}
+library(rpart)
+
+fit<- rpart(y~.,x,control=rpart.control(minsplit=0,minbucket=0,cp=-1, maxcompete=0, maxsurrogate=0, usesurrogate=0, xval=0,maxdepth=5))
+
+```
+```{r}
+error = 1-sum(y_test==predict(fit,x_test, type="class"))/length(y_test)
+cat("Misclassification Error:",error)
+```
+
+#7) Compute the misclassification error on the training data for the Random Forest classifier to the last column of the sonar training data. Show your R code for doing this.
+```{r}
+library(randomForest)
+
+
+fit<-randomForest(x,y)
+error_rate = 1-sum(y==predict(fit,x))/length(y)
+cat("Misclassification Error rate:",error_rate)
+
+```
+#8) This question deals with sonar data 
+
+#a) Use knn() for the k-nearest neighbor classifier for k=5 and k=6 to the last column of the sonar training data. Compute the misclassification error on the training data and also on the test data. 
+```{r}
+library(class)
+fit_train<-knn(x,x,y,k=5)
+train_error = 1-sum(y==fit_train)/length(y)
+cat("Train Error rate:",train_error)
+
+
+
+fit_test<-knn(x,x_test,y,k=5)
+test_error= 1-sum(y_test==fit_test)/length(y_test)
+cat("\n Test Error rate:",test_error)
+
+```
+
+
