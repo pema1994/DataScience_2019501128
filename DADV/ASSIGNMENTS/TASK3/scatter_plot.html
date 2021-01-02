@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Scatter Plot</title>
+	<script src = "https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+</head>
+<body>
+	<svg width="1000" height="1000"></svg>
+	<script>
+		const margin = 60;
+	    const width = 1000 - 2*margin;
+	    const height = 600 - 2*margin;
+
+		var svg = d3.select('svg');
+
+		//positioning the chart 
+		const chart = svg.append('g')
+    		.attr('transform', `translate(${margin}, ${margin})`);
+
+
+    	d3.csv("https://raw.githubusercontent.com/pema1994/DataScience_2019501128/master/DADV/ASSIGNMENTS/TASK3/rank_votes.csv", function(data) {
+    		// console.log(data)
+    		const xScale = d3.scaleLinear()
+			    .range([0, width])
+			    .domain([0, 10])
+
+			chart.append('g')
+				.attr('transform', `translate(0, ${height})`)
+			    .call(d3.axisBottom(xScale));
+
+	    	const yScale = d3.scaleLinear()
+			    .range([0, height])
+			    .domain([2000000, 10000]);
+
+			chart.append('g')
+	    		.call(d3.axisLeft(yScale));
+
+	    	
+	    	console.log("start")
+
+
+			chart.selectAll('dot')
+			    .data([data])
+			    .enter()
+			    .append('circle')
+			    .style("fill", "blue")
+			    .attr('cx', function (d) { return xScale(d.averageRating); })
+			    .attr('cy', function (d) { return yScale(d.numVotes); })
+			    .attr('r', 1.5)
+			    // .attr('width', xScale.bandwidth())
+			    // .attr('height', function(d) { return yScale(d); })
+			
+			console.log("end")
+    	});
+
+    	console.log("done");
+
+	</script>
+</body>
+</html>
+

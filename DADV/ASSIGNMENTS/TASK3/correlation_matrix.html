@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Scatter Plot</title>
+	<script src = "https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+</head>
+<body>
+	<svg width="1000" height="1000"></svg>
+	<script>
+		const margin = 60;
+	    const width = 1000 - 2*margin;
+	    const height = 600 - 2*margin;
+
+		var svg = d3.select('svg');
+
+		//positioning the chart 
+		const chart = svg.append('g')
+    		.attr('transform', `translate(${margin}, ${margin})`);
+
+    	var myVars = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"]
+
+
+    	d3.csv("https://raw.githubusercontent.com/pema1994/DataScience_2019501128/master/DADV/ASSIGNMENTS/TASK3/correlation_data.csv", function(data) {
+    		// console.log(data)
+    		const xScale = d3.scaleBand()
+			    .range([0, width])
+			    .domain(myVars);
+
+			chart.append('g')
+				.attr('transform', "translate(0," + height + ")")
+			    .call(d3.axisBottom(xScale));
+
+	    	const yScale = d3.scaleBand()
+			    .range([height,0])
+			    .domain(myVars);
+
+			chart.append('g')
+	    		.call(d3.axisLeft(yScale));
+
+
+	    	var myColor = d3.scaleLinear()
+	    		.range(["red", "green"])
+			  	.domain([-1,1])
+	    	
+	    	console.log("start")
+
+
+			chart.selectAll()
+			    .data([data])
+		      	.enter()
+		      	.append("rect")
+		      	.attr("x", function(d) { return xScale(d.Company1) })
+		      	.attr("y", function(d) { return yScale(d.Company2) })
+		      	.attr("width", xScale.bandwidth() )
+		      	.attr("height", yScale.bandwidth() )
+		      	.style("fill", function(d) { return myColor(d.Value)} )
+			
+			console.log("end")
+    	});
+
+    	console.log("done");
+
+	</script>
+</body>
+</html>
+
