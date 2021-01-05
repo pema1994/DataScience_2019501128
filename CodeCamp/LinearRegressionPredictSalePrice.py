@@ -165,4 +165,3 @@ getRSqureandMSEVsAlphaPlots(X_train, X_test, y_train, y_test,alpha_start=130,alp
 
 predictTestx(RidgeModel, testx_df)
 
-bb
